@@ -1,0 +1,9 @@
+C:\temp\configoro.net\Service\Configoro.Net.Processor\bin\Debug\Jenkins.ConfigDeployer.Processor.dll
+C:\temp\configoro.net\Service\Configoro.Net.Processor\bin\Debug\Jenkins.ConfigDeployer.Processor.pdb
+C:\temp\configoro.net\Service\Configoro.Net.Processor\bin\Debug\Jenkins.ConfigDeployer.Domain.dll
+C:\temp\configoro.net\Service\Configoro.Net.Processor\bin\Debug\EntityFramework.dll
+C:\temp\configoro.net\Service\Configoro.Net.Processor\bin\Debug\Jenkins.ConfigDeployer.Domain.pdb
+C:\temp\configoro.net\Service\Configoro.Net.Processor\bin\Debug\EntityFramework.xml
+C:\temp\configoro.net\Service\Configoro.Net.Processor\obj\Debug\Configoro.Net.Processor.csprojResolveAssemblyReference.cache
+C:\temp\configoro.net\Service\Configoro.Net.Processor\obj\Debug\Jenkins.ConfigDeployer.Processor.dll
+C:\temp\configoro.net\Service\Configoro.Net.Processor\obj\Debug\Jenkins.ConfigDeployer.Processor.pdb

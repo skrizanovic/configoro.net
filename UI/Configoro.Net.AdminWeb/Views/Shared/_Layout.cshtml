@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        @Styles.Render("~/content/themes/base/jquery-ui-1.10.3.custom.css")
+        @* @Styles.Render("~/content/themes/base/jquery-ui.css")*@
+
+        @Styles.Render("~/app/css/styles.css")
+
+
+<script src="@Url.Content("~/Scripts/jquery-1.9.1.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui-1.9.2.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/knockout-3.0.0.debug.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/knockout.validation.debug.js")" type="text/javascript"></script>
+
+<script src="@Url.Content("~/app/models.js")" type="text/javascript"></script>
+
+<script src="@Url.Content("~/app/main.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/app/binding-handlers.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/app/protectedObservable.js")" type="text/javascript"></script>
+
+<script src="@Url.Content("~/app/viewmodels/processorTypeViewModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/app/viewmodels/configurationTemplateViewModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/app/viewmodels/environmentViewModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/app/viewmodels/configValueViewModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/app/viewmodels/configurationViewModel.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/app/viewmodels/configurationSettingValues.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/app/viewmodels/dialogViewModel.js")" type="text/javascript"></script>
+        
+<script src="@Url.Content("~/app/services/ajaxservice.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/app/services/dataservice.js")" type="text/javascript"></script>
+
+    </head>
+    <body>
+     
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title" />
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        Hello, <span class="username">@User.Identity.Name</span>!
+                    </section>
+                    <nav>
+                        <ul id="menu">
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>

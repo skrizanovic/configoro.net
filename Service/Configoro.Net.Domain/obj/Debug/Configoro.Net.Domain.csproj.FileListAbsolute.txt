@@ -1,0 +1,8 @@
+C:\temp\configoro.net\Service\Configoro.Net.Domain\bin\Debug\Jenkins.ConfigDeployer.Domain.dll.config
+C:\temp\configoro.net\Service\Configoro.Net.Domain\bin\Debug\Jenkins.ConfigDeployer.Domain.dll
+C:\temp\configoro.net\Service\Configoro.Net.Domain\bin\Debug\Jenkins.ConfigDeployer.Domain.pdb
+C:\temp\configoro.net\Service\Configoro.Net.Domain\bin\Debug\EntityFramework.xml
+C:\temp\configoro.net\Service\Configoro.Net.Domain\bin\Debug\EntityFramework.SqlServer.xml
+C:\temp\configoro.net\Service\Configoro.Net.Domain\obj\Debug\Configoro.Net.Domain.csprojResolveAssemblyReference.cache
+C:\temp\configoro.net\Service\Configoro.Net.Domain\obj\Debug\Jenkins.ConfigDeployer.Domain.dll
+C:\temp\configoro.net\Service\Configoro.Net.Domain\obj\Debug\Jenkins.ConfigDeployer.Domain.pdb

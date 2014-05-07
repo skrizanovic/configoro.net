@@ -1,0 +1,16 @@
+C:\temp\configoro.net\UI\Configoro.Net.ConsoleApp\bin\Debug\Configoro.Net.ConsoleApp.exe.config
+C:\temp\configoro.net\UI\Configoro.Net.ConsoleApp\bin\Debug\Configoro.Net.ConsoleApp.exe
+C:\temp\configoro.net\UI\Configoro.Net.ConsoleApp\bin\Debug\Configoro.Net.ConsoleApp.pdb
+C:\temp\configoro.net\UI\Configoro.Net.ConsoleApp\bin\Debug\Jenkins.ConfigDeployer.Domain.dll
+C:\temp\configoro.net\UI\Configoro.Net.ConsoleApp\bin\Debug\Jenkins.ConfigDeployer.Processor.dll
+C:\temp\configoro.net\UI\Configoro.Net.ConsoleApp\bin\Debug\System.Web.Razor.dll
+C:\temp\configoro.net\UI\Configoro.Net.ConsoleApp\bin\Debug\EntityFramework.dll
+C:\temp\configoro.net\UI\Configoro.Net.ConsoleApp\bin\Debug\Ionic.Zip.Reduced.dll
+C:\temp\configoro.net\UI\Configoro.Net.ConsoleApp\bin\Debug\Jenkins.ConfigDeployer.Domain.pdb
+C:\temp\configoro.net\UI\Configoro.Net.ConsoleApp\bin\Debug\Jenkins.ConfigDeployer.Processor.pdb
+C:\temp\configoro.net\UI\Configoro.Net.ConsoleApp\bin\Debug\EntityFramework.SqlServer.xml
+C:\temp\configoro.net\UI\Configoro.Net.ConsoleApp\bin\Debug\System.Web.Razor.xml
+C:\temp\configoro.net\UI\Configoro.Net.ConsoleApp\bin\Debug\EntityFramework.xml
+C:\temp\configoro.net\UI\Configoro.Net.ConsoleApp\obj\x86\Debug\Configoro.Net.ConsoleApp.csprojResolveAssemblyReference.cache
+C:\temp\configoro.net\UI\Configoro.Net.ConsoleApp\obj\x86\Debug\Configoro.Net.ConsoleApp.exe
+C:\temp\configoro.net\UI\Configoro.Net.ConsoleApp\obj\x86\Debug\Configoro.Net.ConsoleApp.pdb

@@ -1,0 +1,188 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+        </div>
+    </section>
+}
+@*<div data-bind="text: ko.toJSON($root)"></div>*@
+
+<div id="confirm" data-bind="
+      dialog: {modal: true, resizable: false, title: title, dialogClass: 'ui-form no-close-button', minHeight: 100, width: 300}
+    , dialogVisible: isOpen
+    , template: { name: 'confirmTmpl' }">
+</div>
+
+<div id="dialog" data-bind="
+      dialog: {modal: true, resizable: false, title: title, dialogClass: 'ui-form no-close-button', minHeight: 100, maxHeight: 200, width: 'auto'}
+    , dialogVisible: isOpen
+    , template: { name: core.App.SelectedView }">
+</div>
+
+<script id="environmentTmpl" type="text/html">
+    <div data-bind="with: Data">
+        <label for="name">Name</label>
+        <input type="text" id="name" class="ui-widget-content ui-corner-all" data-bind="value: EnvironmentName, valueUpdate: 'afterkeydown'" />
+        <label for="isActive">Is Active</label>
+        <input type="checkbox" id="isActive" class="ui-widget-content ui-corner-all" data-bind="checked: IsActive">
+    </div>
+    <hr/>
+    <span class="button mediumrounded white" data-bind="click: save">Save</span>
+    <span class="button mediumrounded white" data-bind="click: cancel">Exit</span>
+</script>
+
+<script id="valuesTmpl" type="text/html">
+    <div data-bind="with: Data">
+        <label for="name">Name</label>
+        <input type="text" id="name" class="ui-widget-content ui-corner-all" data-bind="value: Name, valueUpdate: 'afterkeydown'" />
+        <label for="value">Value</label>
+        <input type="text" id="value" class="ui-widget-content ui-corner-all" data-bind="value: Value, valueUpdate: 'afterkeydown'" />
+        <label for="isActive">Is Active</label>
+        <input type="checkbox" id="isActive" class="ui-widget-content ui-corner-all" data-bind="checked: IsActive">
+    </div>
+    <hr/>
+    <span class="button mediumrounded white" data-bind="click: save">Save</span>
+    <span class="button mediumrounded white" data-bind="click: cancel">Exit</span>
+
+</script>
+
+<script id="templateTmpl" type="text/html">
+    <label for="name">Name</label>
+    <input type="text" id="name" class="ui-widget-content ui-corner-all" data-bind="value: Data.TemplateName" />
+
+    <label for="configFile">Config File</label>
+    <input type="text" id="configFile" class="ui-widget-content ui-corner-all" data-bind="value: Data.ConfigFile">
+    <label for="configType">Config Type</label>
+    <input type="text" id="configType" class="ui-widget-content ui-corner-all" data-bind="value: Data.ConfigType" disabled="disabled">
+
+    <label for="isActive">Is Active</label>
+    <input type="checkbox" id="isActive" class="ui-widget-content ui-corner-all" data-bind="checked: Data.IsActive">
+    <hr/>
+    <span class="button mediumrounded white" data-bind="click: save">OK</span>
+    <span class="button mediumrounded white" data-bind="click: cancel">Cancel</span>
+</script>
+
+<script id="settingTmpl" type="text/html">
+    <label for="changePropertyName">ChangePropertyName</label>
+    <input type="text" id="changePropertyName" class="ui-widget-content ui-corner-all" data-bind="value: Data.ConfigurationSetting().ChangePropertyName">
+    <label for="xpathValue">XpathValue</label>
+    <input type="text" id="xpathValue" class="ui-widget-content ui-corner-all" data-bind="value: Data.ConfigurationSetting().XpathValue">
+    <label>Processor Type
+        <select data-bind="options: core.ProcessorTypes.Map, optionsText: 'Name', value: Data.SelectedProcessorType"></select>
+    </label>
+    <label data-bind="visible: core.EnvironmentsViewModel.Selected().ConfigValues().length > 0">Config Value
+        <select data-bind="options: core.EnvironmentsViewModel.Selected().ConfigValues, 
+            optionsText: 'Name', value: Data.SelectedValue, optionsCaption: 'Unspecified'"></select>
+    </label>
+    <span data-bind="text: Data.SelectedValue() ? Data.SelectedValue().Value : undefined"></span>
+    <hr/>
+    <span class="button mediumrounded white" data-bind="click: save">OK</span>
+    <span class="button mediumrounded white" data-bind="click: cancel">Cancel</span>
+</script>
+
+<script id="confirmTmpl" type="text/html">
+    <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+    <p data-bind="text: Data"></p>
+    <hr/>
+    <span class="button mediumrounded white" data-bind="click: save">OK</span>
+    <span class="button mediumrounded white" data-bind="click: cancel">Cancel</span>
+</script>
+
+<div id="appControlSection">
+    <span class="label">Selected Environment:
+        <select data-bind="options: core.EnvironmentsViewModel.Environments, optionsText: 'EnvironmentName', value: core.EnvironmentsViewModel.Selected"></select>
+    </span>
+    <br/><br/>
+    <div>
+        <span class="button mediumrounded white" data-bind="click: core.App.SelectMode, text: core.App.DisplaySelectedMode"></span>
+        <span class="button mediumrounded white" data-bind="click: core.EnvironmentsViewModel.Add, visible: core.App.IsEnvironmentsMode()">Add Environment</span>
+        <span class="button mediumrounded white" data-bind="click: core.ConfigurationTemplatesViewModel.AddTemplate, visible: core.App.IsTemplatesMode()">Add Template</span>
+    </div>
+    <br/>
+</div>
+
+<div id="environmentsSection" data-bind="visible: core.App.IsEnvironmentsMode()">
+    <div id="environments" 
+         data-bind="foreach: core.EnvironmentsViewModel.Environments, accordion: { heightStyle: 'content', collapsible: true }">
+        <h3 data-bind="text: EnvironmentName"></h3>
+        <div>
+            <div>
+                <span class="button mediumrounded white" data-bind="click: core.EnvironmentsViewModel.AddValue">Add Value</span>
+                <span class="button mediumrounded white" data-bind="click: core.EnvironmentsViewModel.Edit">Edit Environment</span>
+                <span class="button mediumrounded white" data-bind="click: core.EnvironmentsViewModel.Delete">Delete Environment</span>
+                <hr/>
+            </div>
+            <table>
+                <tbody style='display: block' data-bind="foreach: ConfigValues">
+                    <tr>
+                        <td class="button-cell">
+                            <span class="button mediumrounded white" data-bind="click: core.ConfigValuesViewModel.Edit">Edit</span>
+                        </td>
+                        <td class=button-cell>
+                            <span class="button mediumrounded white" data-bind="click: function(data, event) { 
+                                core.ConfigValuesViewModel.Delete($parent, data, event) }">Delete</span>
+                        </td>
+                        <td class="medium"><span data-bind="text: Name"></span></td>
+                        <td class="medium" style="white-space: nowrap;"><span data-bind="text: Value"></span></td>
+                        <td><input type="checkbox" class="ui-widget-content ui-corner-all" data-bind="checked: IsActive" disabled="disabled" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="templatesSection" data-bind="visible: core.App.IsTemplatesMode()">
+    <div id="templates" data-bind="foreach: core.ConfigurationTemplatesViewModel.ConfigurationTemplates
+                                            , accordion: { heightStyle: 'content', collapsible: true }">
+@*        
+        <h3 data-bind="text: TemplateStatus, css: { 'ui-accordion-header':true, 'ui-helper-reset':true, 'ui-state-default':true, 'ui-accordion-icons':true, 'ui-accordion-header-active':true, 'ui-state-active':true, 'ui-corner-top':true }"></h3>
+*@
+@*
+        <h3 data-bind="text: TemplateStatus, css: { 'in-red': true } "></h3>
+*@
+
+        <h3 data-bind="text: TemplateStatus"></h3>
+        <div>
+            <div>
+                <span class="button mediumrounded white" data-bind="click: core.ConfigurationTemplatesViewModel.AddConfiguration">Add Setting</span>
+                <span class="button mediumrounded white" data-bind="click: core.ConfigurationTemplatesViewModel.EditTemplate">Edit Template</span>
+                <span class="button mediumrounded white" data-bind="click: core.ConfigurationTemplatesViewModel.DeleteTemplate">Delete Template</span>
+                <hr/>
+            </div>
+            <table>
+                <!--<thead>
+                        <tr style='background-color: #555555;color: #FFFFFF;'>
+                            <th /><th /><th>Name</th><th>Is XML</th><th>XPath</th>
+                        </tr>
+                    </thead>-->
+                <tbody style='display: block' data-bind="foreach: ConfigurationSettings" id="itemTable">
+                    <tr>
+                        <td class="button-cell">
+                            <span class="button mediumrounded white" data-bind="click: core.ConfigurationTemplatesViewModel.EditConfiguration">Edit</span>
+                        </td>
+                        <td class=button-cell>
+                            <span class="button mediumrounded white" data-bind="click: function(data, event) { 
+                                core.ConfigurationTemplatesViewModel.DeleteConfiguration($parent, data, event) }">Delete</span>
+                        </td>
+                        
+                        <td class="medium"><span data-bind="text: SelectedConfigValue"></span></td>
+                        <td class="medium"><span data-bind="text: XpathValue"></span></td>
+                        <td class="medium"><span data-bind="text: ChangePropertyName"></span></td>
+                        <td class="medium"><span data-bind="text: ProcessorTypeId"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    core.App.Run();
+</script>
