@@ -26,7 +26,10 @@ namespace Configoro.Net.Processor
             _service = service;
             _file = file;
         }
-        
+        public bool ConvertConfigFile(string environment, string template, string file)
+        {
+            return ConvertConfigFile(environment, template, file, null);
+        }
         public bool ConvertConfigFile(string environment, string template, string file, string zipFileName)
         {
             IProcessor processor = null;
@@ -110,7 +113,7 @@ namespace Configoro.Net.Processor
                 {
                     throw new Exception("File does not exist");
                 }
-                return processor.ConvertDocument(file.fileName, configSettings);
+                return processor.ConvertDocument(file, configSettings);
 
             }
         }

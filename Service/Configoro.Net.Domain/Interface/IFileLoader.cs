@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace Configoro.Net.Domain.Interface
 {
@@ -10,7 +11,7 @@ namespace Configoro.Net.Domain.Interface
         bool FileExists { get; }
         string fileName { get; set; }
         string AbsolutefileName { get; set; }
-        string fileContent { get;  }
+        string Content { get;  }
         void Save(string content);
         int Length { get; }
     }

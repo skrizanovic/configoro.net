@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using Configoro.Net.Domain;
+using Configoro.Net.Domain.Interface;
 
 namespace Configoro.Net.Processor.Processor
 {
     public class XMLAddNodeProcessor : BaseNodeConfig, IProcessor
     {
-        public bool ConvertDocument(string file, List<Domain.ConfigView> config)
+        public bool ConvertDocument(IFileLoader file, List<Domain.ConfigView> config)
         {
             return base.ConvertDocument(file, config);
         }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml;
 using Configoro.Net.Domain;
 using System.IO;
+using Configoro.Net.Domain.Interface;
 
 namespace Configoro.Net.Processor.Processor
 {
@@ -19,19 +20,30 @@ namespace Configoro.Net.Processor.Processor
             ChangeContent(config, doc);
             MemoryStream returnStream = new MemoryStream();
             doc.Save(returnStream);
+            
 
             returnStream.Position = 0;
             return returnStream;
         }
 
-        public bool ConvertDocument(string file, List<Domain.ConfigView> config)
+        public bool ConvertDocument(IFileLoader file, List<Domain.ConfigView> config)
         {
             XmlDocument doc = new XmlDocument();
             doc.PreserveWhitespace = true;
 
-            doc.Load(file);
+            doc.LoadXml(file.Content);
             ChangeContent(config, doc);
-            doc.Save(file);
+
+
+            using (var stringWriter = new StringWriter())
+            using (var xmlTextWriter = XmlWriter.Create(stringWriter))
+            {
+                doc.WriteTo(xmlTextWriter);
+                xmlTextWriter.Flush();
+                file.Save(stringWriter.GetStringBuilder().ToString());
+            }
+
+           
 
             return true;
         }

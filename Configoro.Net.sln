@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{8F0A51CC-A49D-4912-83FC-6566251D7CC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.ConsoleApp", "UnitTest\Test.ConsoleApp\Test.ConsoleApp.csproj", "{BFD24056-C541-4352-88AC-E76F62841FD6}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{67995E00-D0C9-4470-A6B0-2EB2D01C0F6E}"
 	ProjectSection(SolutionItems) = preProject
-		Jenkins.ConfigDeployer.ConsoleApp.vsmdi = Jenkins.ConfigDeployer.ConsoleApp.vsmdi
+		Configoro.Net.vsmdi = Configoro.Net.vsmdi
 		Local.testsettings = Local.testsettings
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
@@ -24,9 +22,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configoro.Net.Domain", "Ser
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configoro.Net.Processor", "Service\Configoro.Net.Processor\Configoro.Net.Processor.csproj", "{83AEC9B2-7DDC-4D4A-81EC-DAD3743B7AD8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configoro.Net.UnitTests", "UnitTest\Configoro.Net.UnitTests\Configoro.Net.UnitTests.csproj", "{4E9FCB6F-6A21-4CCE-BD12-4411E5AC665A}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = Jenkins.ConfigDeployer.ConsoleApp.vsmdi
+		CategoryFile = Configoro.Net.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,16 +37,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BFD24056-C541-4352-88AC-E76F62841FD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BFD24056-C541-4352-88AC-E76F62841FD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BFD24056-C541-4352-88AC-E76F62841FD6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{BFD24056-C541-4352-88AC-E76F62841FD6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{BFD24056-C541-4352-88AC-E76F62841FD6}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{BFD24056-C541-4352-88AC-E76F62841FD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BFD24056-C541-4352-88AC-E76F62841FD6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BFD24056-C541-4352-88AC-E76F62841FD6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{BFD24056-C541-4352-88AC-E76F62841FD6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{BFD24056-C541-4352-88AC-E76F62841FD6}.Release|x86.ActiveCfg = Release|Any CPU
 		{88211D86-55DC-4DD8-9BE5-DBA4CDE9A742}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{88211D86-55DC-4DD8-9BE5-DBA4CDE9A742}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88211D86-55DC-4DD8-9BE5-DBA4CDE9A742}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -87,13 +77,23 @@ Global
 		{83AEC9B2-7DDC-4D4A-81EC-DAD3743B7AD8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{83AEC9B2-7DDC-4D4A-81EC-DAD3743B7AD8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{83AEC9B2-7DDC-4D4A-81EC-DAD3743B7AD8}.Release|x86.ActiveCfg = Release|Any CPU
+		{4E9FCB6F-6A21-4CCE-BD12-4411E5AC665A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E9FCB6F-6A21-4CCE-BD12-4411E5AC665A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E9FCB6F-6A21-4CCE-BD12-4411E5AC665A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4E9FCB6F-6A21-4CCE-BD12-4411E5AC665A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4E9FCB6F-6A21-4CCE-BD12-4411E5AC665A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4E9FCB6F-6A21-4CCE-BD12-4411E5AC665A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E9FCB6F-6A21-4CCE-BD12-4411E5AC665A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E9FCB6F-6A21-4CCE-BD12-4411E5AC665A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4E9FCB6F-6A21-4CCE-BD12-4411E5AC665A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4E9FCB6F-6A21-4CCE-BD12-4411E5AC665A}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{BFD24056-C541-4352-88AC-E76F62841FD6} = {8F0A51CC-A49D-4912-83FC-6566251D7CC7}
 		{67995E00-D0C9-4470-A6B0-2EB2D01C0F6E} = {8F0A51CC-A49D-4912-83FC-6566251D7CC7}
+		{4E9FCB6F-6A21-4CCE-BD12-4411E5AC665A} = {8F0A51CC-A49D-4912-83FC-6566251D7CC7}
 		{88211D86-55DC-4DD8-9BE5-DBA4CDE9A742} = {099AA393-788C-4804-9094-2FB04AF24C36}
 		{DCD00B53-20BF-4AD4-9D70-0C2F1795D6E1} = {099AA393-788C-4804-9094-2FB04AF24C36}
 		{21E8AD8F-1154-4653-AE35-25676CB84FCE} = {623F9A3D-FF7E-4C70-8234-60411C4D5F14}

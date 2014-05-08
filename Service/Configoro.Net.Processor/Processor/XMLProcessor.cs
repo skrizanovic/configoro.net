@@ -6,12 +6,13 @@ using System.Xml;
 using System.Xml.XPath;
 using Configoro.Net.Domain;
 using System.IO;
+using Configoro.Net.Domain.Interface;
 
 namespace Configoro.Net.Processor.Processor
 {
     public class XMLProcessor : BaseNodeConfig, IProcessor
     {
-        public bool ConvertDocument(string file, List<ConfigView> config )
+        public bool ConvertDocument(IFileLoader file, List<ConfigView> config)
         {
 
 

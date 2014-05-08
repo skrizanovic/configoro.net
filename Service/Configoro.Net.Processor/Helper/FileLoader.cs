@@ -25,19 +25,22 @@ namespace Configoro.Net.Processor.Helper
             set { SetFileName(value); }
         }
 
-        private string _fileContent;
-        public string fileContent
+        protected string _fileContent;
+        public string Content
         {
             get
             {
-                return System.IO.File.ReadAllText(fileName);
+                if(_fileContent==null)
+                    _fileContent= System.IO.File.ReadAllText(fileName);
+
+                return _fileContent;
             }
            
         }
 
-        public void Save(string content)
+        public virtual void Save(string content)
         {
-            File.WriteAllText(fileName, content);
+            File.WriteAllText(AbsolutefileName, content);
         }
         private void SetFileName(string file)
         {

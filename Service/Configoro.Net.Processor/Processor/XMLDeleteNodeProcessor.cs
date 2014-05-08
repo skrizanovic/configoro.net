@@ -5,12 +5,13 @@ using System.Text;
 using System.Xml;
 using Configoro.Net.Domain;
 using System.IO;
+using Configoro.Net.Domain.Interface;
 
 namespace Configoro.Net.Processor.Processor
 {
     public class XMLDeleteNodeProcessor : BaseNodeConfig, IProcessor
     {
-        public bool ConvertDocument(string file, List<Domain.ConfigView> config)
+        public bool ConvertDocument(IFileLoader file, List<Domain.ConfigView> config)
         {
             return base.ConvertDocument(file, config);
         }
