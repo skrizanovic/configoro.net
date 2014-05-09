@@ -126,9 +126,11 @@ core.EnvironmentsViewModel = (function (core) {
                 core.DataService.DeleteEnvironment(arg, function (result) {
 
                     // Cleanup mapping
-                    environment.ConfigValues.forEach(function (item) {
-                        core.ConfigurationSettingValues.RemoveAllByConfigValue(item.ConfigValueId());
-                    });
+                    if (environment.ConfigValues().length > 0) {
+                        environment.ConfigValues().forEach(function (item) {
+                            core.ConfigurationSettingValues.RemoveAllByConfigValue(item.ConfigValueId());
+                        });
+                    }
 
                     var target = event.target;
                     var parent = $(target).closest('div');
@@ -172,10 +174,9 @@ core.EnvironmentsViewModel = (function (core) {
     };
 
     function SortConfigValues(environment, event) {
-
         return environment.ConfigValues();
-        
     }
+
     return {
         Environments: environments
         , Selected: selected

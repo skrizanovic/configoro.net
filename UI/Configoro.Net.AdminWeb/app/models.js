@@ -74,6 +74,7 @@ function ConfigurationSetting() {
     self.ChangePropertyName = ko.observable("").extend({ required: true, message: 'Please supply property name.' });
     self.XpathValue = ko.observable("").extend({ required: true, message: 'Please supply value.' });
     self.SelectedConfigValue = ko.computed(function () {
+      
         var matchConfigurationSettingValue = ko.utils.arrayFirst(core.ConfigurationSettingValues.Map(), function (element) {
             if (core.EnvironmentsViewModel.Selected() != undefined)
                 return self.ConfigurationSettingId() === element.ConfigurationSettingId && core.EnvironmentsViewModel.Selected().EnvironmentId() == element.EnvironmentId;
@@ -95,6 +96,9 @@ function ConfigurationSetting() {
 
         return matchConfigValue.Name();
     });
+    self.recalcSelectedConfig = function () {
+        self.ConfigurationSettingId.notifySubscribers();
+    };     
 
     self.dirtyFlag = new ko.dirtyFlag(self);
 };

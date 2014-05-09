@@ -26,7 +26,13 @@ core.ConfigurationSettingValues = (function (core) {
         };
 
         core.DataService.AddConfigurationSettingValue(arg, function (result) {
-            map.push(result);
+            var val = new SettingConfigValue();
+            val.ConfigurationSettingValueId = result.ConfigurationSettingValueId;
+            val.ConfigurationSettingId = result.ConfigurationSettingId;
+            val.ConfigValueId = result.ConfigValueId;
+            val.EnvironmentId = result.EnvironmentId;
+
+            map.push(val);
         });
     }
 

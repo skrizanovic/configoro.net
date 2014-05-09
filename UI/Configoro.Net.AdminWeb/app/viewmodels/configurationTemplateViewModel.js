@@ -8,9 +8,9 @@ core.ConfigurationTemplatesViewModel = (function (core) {
     var selectedConfig = ko.observable();
 
     function load() {
-        core.DataService.GetTemplatesSettings(function(json) {
+        core.DataService.GetTemplatesSettings(function (json) {
 
-            $.each(json.ConfigurationTemplates, function(i, t) {
+            $.each(json.ConfigurationTemplates, function (i, t) {
                 var templ = new ConfigurationTemplate()
                     .ConfigurationTemplateId(t.ConfigurationTemplateId)
                     .TemplateName(t.TemplateName)
@@ -18,7 +18,7 @@ core.ConfigurationTemplatesViewModel = (function (core) {
                     .ConfigType(t.ConfigType)
                     .IsActive(t.IsActive);
 
-                $.each(t.ConfigurationSettings, function(j, s) {
+                $.each(t.ConfigurationSettings, function (j, s) {
                     templ.addConfigurationSetting(s);
                 });
 
@@ -34,10 +34,10 @@ core.ConfigurationTemplatesViewModel = (function (core) {
         core.App.SelectedView('templateTmpl');
 
         var data = new ConfigurationTemplate();
-        var viewModel = new core.DialogViewModel.Create("dialog", 
-            "Add Template", 
+        var viewModel = new core.DialogViewModel.Create("dialog",
+            "Add Template",
             data,
-            function(t) {
+            function (t) {
 
                 var newTemplate = new ConfigurationTemplate()
                     .ConfigurationTemplateId(t.ConfigurationTemplateId())
@@ -55,7 +55,7 @@ core.ConfigurationTemplatesViewModel = (function (core) {
 
                 core.App.SelectedView(undefined);
             },
-            function() {
+            function () {
                 core.App.SelectedView(undefined);
             });
 
@@ -72,7 +72,7 @@ core.ConfigurationTemplatesViewModel = (function (core) {
             .ConfigType(item.ConfigType())
             .IsActive(item.IsActive());
 
-        var viewModel = new core.DialogViewModel.Create("dialog", 
+        var viewModel = new core.DialogViewModel.Create("dialog",
             "Edit Template",
             tmp,
             function () {
@@ -89,7 +89,7 @@ core.ConfigurationTemplatesViewModel = (function (core) {
 
                 core.App.SelectedView(undefined);
             },
-            function() {
+            function () {
                 core.App.SelectedView(undefined);
             });
 
@@ -98,8 +98,8 @@ core.ConfigurationTemplatesViewModel = (function (core) {
 
     function deleteTemplate(template, event) {
 
-        var viewModel = new core.DialogViewModel.Create("confirm", 
-            "Delete Template", 
+        var viewModel = new core.DialogViewModel.Create("confirm",
+            "Delete Template",
             "These operation cannot be reverted. Are you sure?",
             function () {
 
@@ -107,14 +107,16 @@ core.ConfigurationTemplatesViewModel = (function (core) {
                 core.DataService.DeleteConfigurationTemplate(arg, function (result) {
 
                     // Cleanup mapping
-                    configurationTemplates.ConfigurationSettings.forEach(function (item) {
-                        core.ConfigurationSettingValues.RemoveAllByConfigurationSetting(item.ConfigurationSettingId());
-                    });
+                    if (template.ConfigurationSettings().length > 0) {
+                        template.ConfigurationSettings().forEach(function (item) {
+                            core.ConfigurationSettingValues.RemoveAllByConfigurationSetting(item.ConfigurationSettingId());
+                        });
+                    }
 
                     var target = event.target;
                     var parent = $(target).closest('div');
                     var head = parent.prev('h3');
-                    parent.add(head).fadeOut('slow', function() {
+                    parent.add(head).fadeOut('slow', function () {
                         head.remove();
                         parent.remove();
                         configurationTemplates.remove(template);
@@ -131,10 +133,10 @@ core.ConfigurationTemplatesViewModel = (function (core) {
 
         core.ConfigurationViewModel.Init();
 
-        var viewModel = new core.DialogViewModel.Create("dialog", 
+        var viewModel = new core.DialogViewModel.Create("dialog",
             "Add Setting",
             core.ConfigurationViewModel,
-            function(result) {
+            function (result) {
                 var newSetting = new ConfigurationSetting()
                     .ConfigurationTemplateId(template.ConfigurationTemplateId())
                     .ChangePropertyName(result.ConfigurationSetting().ChangePropertyName())
@@ -148,14 +150,16 @@ core.ConfigurationTemplatesViewModel = (function (core) {
                     template.ConfigurationSettings.push(newSetting);
 
                     // Update mapping
-                    var configurationSettingId = newSetting.ConfigurationSettingId();
-                    var configValueId = core.ConfigurationViewModel.SelectedValue().ConfigValueId();
-                    core.ConfigurationSettingValues.Add(configurationSettingId, configValueId);
+                    if (core.ConfigurationViewModel.SelectedValue() !== undefined) {
+                        var configurationSettingId = newSetting.ConfigurationSettingId();
+                        var configValueId = core.ConfigurationViewModel.SelectedValue().ConfigValueId();
+                        core.ConfigurationSettingValues.Add(configurationSettingId, configValueId);
+                    }
                 });
 
                 core.App.SelectedView(undefined);
             },
-            function() {
+            function () {
                 core.App.SelectedView(undefined);
             });
 
@@ -168,10 +172,10 @@ core.ConfigurationTemplatesViewModel = (function (core) {
 
         core.ConfigurationViewModel.Init(configuration);
 
-        var viewModel = new core.DialogViewModel.Create("dialog", 
+        var viewModel = new core.DialogViewModel.Create("dialog",
             "Edit Setting",
             core.ConfigurationViewModel,
-            function(data) {
+            function (data) {
 
                 var setting = new ConfigurationSetting()
                     .ConfigurationSettingId(configuration.ConfigurationSettingId())
@@ -197,21 +201,27 @@ core.ConfigurationTemplatesViewModel = (function (core) {
                     }
                 }
 
-                var arg = { 'setting': setting };
+
+                //update the display
+                //configuration.SelectedConfigValue(core.ConfigurationViewModel.SelectedValue().Name())
+                configuration.recalcSelectedConfig();
+
+
+
+                var arg = { 'setting': setting, 'environmentId': core.EnvironmentsViewModel.Selected().EnvironmentId() };
                 core.DataService.UpdateConfigurationSetting(arg, function (result) {
 
-                    configuration
-                        .ChangePropertyName(result.ChangePropertyName)
-                        .XpathValue(result.XpathValue)
-                        .ProcessorTypeId(result.ProcessorTypeId)
-                        .SelectedConfigValue(result.ConfigValue)
+                    configuration.ChangePropertyName(result.ChangePropertyName)
+                    configuration.XpathValue(result.XpathValue)
+                    configuration.ProcessorTypeId(result.ProcessorTypeId)
+                    //configuration.SelectedConfigValue(result.ConfigValue)
+                    configuration.recalcSelectedConfig();
 
-                        
                 });
 
                 core.App.SelectedView(undefined);
             },
-            function() {
+            function () {
                 core.App.SelectedView(undefined);
             });
 
@@ -220,10 +230,10 @@ core.ConfigurationTemplatesViewModel = (function (core) {
 
     function deleteConfiguration(parent, item, event) {
 
-        var viewModel = new core.DialogViewModel.Create("confirm", 
-            "Delete Setting", 
+        var viewModel = new core.DialogViewModel.Create("confirm",
+            "Delete Setting",
             "These operation cannot be reverted. Are you sure?",
-            function() {
+            function () {
 
                 core.ConfigurationViewModel.Init(item);
 
@@ -258,7 +268,7 @@ core.ConfigurationTemplatesViewModel = (function (core) {
         //$(selectedObj.currentTarget).attr('bgcolor', '#CCCCCC');
 
         // highlight selected row via css
-        $('#itemTable tr').each(function() {
+        $('#itemTable tr').each(function () {
             $(this).css('background-color', '');
         });
         $(selectedObj.currentTarget).css({
@@ -267,7 +277,7 @@ core.ConfigurationTemplatesViewModel = (function (core) {
     };
 
     return {
-          ConfigurationTemplates: configurationTemplates
+        ConfigurationTemplates: configurationTemplates
         , SelectedConfig: selectedConfig
         , SelectConfig: selectConfig
 
@@ -280,4 +290,4 @@ core.ConfigurationTemplatesViewModel = (function (core) {
         , DeleteConfiguration: deleteConfiguration
     };
 
-}(core));
+} (core));

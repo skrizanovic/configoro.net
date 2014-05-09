@@ -33,7 +33,7 @@ namespace Configoro.Net.AdminWeb.Transformer
             {
                 ChangePropertyName = config.ChangePropertyName,
                 ConfigurationSettingId = config.ConfigurationSettingId,
-                //ConfigValue = //config.ConfigurationSettingValues.FirstOrDefault().ConfigValue.Name,
+                ConfigValue = config.ConfigurationSettingValues!=null ? config.ConfigurationSettingValues.FirstOrDefault().ConfigValue.Name : "Unspecified",
                 ProcessorTypeId = config.ProcessorTypeId,
                 XpathValue = config.XpathValue
             };

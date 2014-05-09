@@ -270,9 +270,9 @@ namespace Configoro.Net.AdminWeb.Controllers
         /// <param name="setting">The setting.</param>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult UpdateConfigurationSetting(ConfigurationSetting setting)
+        public JsonResult UpdateConfigurationSetting(ConfigurationSetting setting, int environmentId)
         {
-            var cs = _service.UpdateConfigurationSetting(setting).ToConfigurationSettingViewModel();
+            var cs = _service.UpdateConfigurationSetting(setting, environmentId).ToConfigurationSettingViewModel();
             return new JsonResult { Data = cs, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
@@ -326,7 +326,7 @@ namespace Configoro.Net.AdminWeb.Controllers
         [HttpPost]
         public JsonResult AddConfigurationSettingValue(int configurationSettingId, int configValueId)
         {
-            var result = _service.AddConfigurationSettingValue(configurationSettingId, configValueId);
+            var result = _service.AddConfigurationSettingValue(configurationSettingId, configValueId).ToConfigSettingViewModel();
             return new JsonResult { Data = result, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 

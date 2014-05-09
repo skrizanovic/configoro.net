@@ -108,20 +108,33 @@ namespace Configoro.Net.Domain
             {
                 using (var db = new ConfigClassContext())
                 {
-                    // First, remove mapping
-                    foreach (var cv in environment.ConfigValues)
+                    if (environment.ConfigValues != null && environment.ConfigValues.Count > 0)
                     {
-                        var csv = db.ConfigurationSettingValue.Where(e => 
-                            e.ConfigValueId == cv.ConfigValueId).ToList();
-                        db.ConfigurationSettingValue.RemoveRange(csv);
+                        // First, remove mapping
+                        foreach (var cv in environment.ConfigValues)
+                        {
+                            var csv = db.ConfigurationSettingValue.Where(e => 
+                                e.ConfigValueId == cv.ConfigValueId).ToList();
+
+                            if (csv.Count <= 0) continue;
+
+                            db.ConfigurationSettingValue.RemoveRange(csv);
+                            db.SaveChanges();
+                        }
+
+                        // Second, remove config values
+                        foreach (var cv in environment.ConfigValues)
+                        {
+                            db.ConfigValue.Attach(cv);
+                            db.ConfigValue.Remove(cv);
+                        }
+                        db.SaveChanges();
                     }
 
-                    // Second, remove values
-                    db.ConfigValue.RemoveRange(environment.ConfigValues);
-
                     // Finally, remove environment
-                    var env = db.Environment.Attach(environment);
-                    db.Environment.Remove(environment);
+                    var envToDelete = new Environment {EnvironmentId = environment.EnvironmentId};
+                    var env = db.Environment.Attach(envToDelete);
+                    db.Environment.Remove(envToDelete);
                     db.SaveChanges();
                     return env;
                 }
@@ -129,6 +142,7 @@ namespace Configoro.Net.Domain
             catch (Exception ex)
             {
             }
+
             return null;
         }
 
@@ -391,27 +405,41 @@ namespace Configoro.Net.Domain
             {
                 using (var db = new ConfigClassContext())
                 {
-                    // First, remove mapping
-                    foreach (var cs in template.ConfigurationSettings)
+                    if (template.ConfigurationSettings != null && template.ConfigurationSettings.Count > 0)
                     {
-                        var csv = db.ConfigurationSettingValue.Where(e =>
-                            e.ConfigurationSettingId == cs.ConfigurationSettingId).ToList();
-                        db.ConfigurationSettingValue.RemoveRange(csv);
+                        // First, remove mapping
+                        foreach (var cs in template.ConfigurationSettings)
+                        {
+                            var csv = db.ConfigurationSettingValue.Where(e =>
+                                e.ConfigurationSettingId == cs.ConfigurationSettingId).ToList();
+
+                            if (csv.Count <= 0) continue;
+
+                            db.ConfigurationSettingValue.RemoveRange(csv);
+                            db.SaveChanges();
+                        }
+
+                        // Second, remove settings
+                        foreach (var cs in template.ConfigurationSettings)
+                        {
+                            db.ConfigurationSetting.Attach(cs);
+                            db.ConfigurationSetting.Remove(cs);
+                        }
+                        db.SaveChanges();
                     }
 
-                    // Second, remove settings
-                    db.ConfigurationSetting.RemoveRange(template.ConfigurationSettings);
-
                     // Finally, remove template
-                    var t = db.ConfigurationTemplate.Attach(template);
-                    db.ConfigurationTemplate.Remove(template);
+                    var templToDelete = new ConfigurationTemplate { ConfigurationTemplateId = template.ConfigurationTemplateId };
+                    var templ = db.ConfigurationTemplate.Attach(templToDelete);
+                    db.ConfigurationTemplate.Remove(templToDelete);
                     db.SaveChanges();
-                    return t;
+                    return templ;
                 }
             }
             catch (Exception ex)
             {
             }
+
             return null;
         }
 
@@ -467,6 +495,8 @@ namespace Configoro.Net.Domain
                             ConfigValueId = configValueId, ConfigurationSettingId = configurationSettingId
                         });
                     db.SaveChanges();
+                    db.ConfigValue.Where(p => p.ConfigValueId == configValueId).FirstOrDefault();
+
                     return csv;
                 }
             }
@@ -485,7 +515,7 @@ namespace Configoro.Net.Domain
         /// </summary>
         /// <param name="setting">The setting.</param>
         /// <returns></returns>
-        public ConfigurationSetting UpdateConfigurationSetting(ConfigurationSetting setting)
+        public ConfigurationSetting UpdateConfigurationSetting(ConfigurationSetting setting, int environmentId)
         {
             try
             {
@@ -503,9 +533,14 @@ namespace Configoro.Net.Domain
 
                         db.SaveChanges();
                     }
-                    cs = db.ConfigurationSetting.Include("ConfigurationSettingValues").Include("ConfigurationSettingValues.ConfigValue").FirstOrDefault(e =>
-                         e.ConfigurationSettingId == setting.ConfigurationSettingId
-                         );
+
+                    var csv = db.ConfigurationSettingValue
+                        .Include("ConfigurationSetting")
+                        .Include("ConfigValue")
+                        .Where(p => p.ConfigValue.EnvironmentId == environmentId && 
+                            p.ConfigurationSettingId == setting.ConfigurationSettingId).ToList();
+
+
 
                     return cs;
                 }
